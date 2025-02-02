@@ -1,8 +1,6 @@
 #Define variables
 prevImage = []
 
-
-
 def printImage(image):
     global prevImage
     if (len(image) == 15 or (image == "null")):
@@ -134,7 +132,7 @@ def MainState(image="null") :
         return "1"
         #Returns 1 because you chose option 1
     else:
-        #ASk 2nd Question
+        #Ask 2nd Question
         choice2 = AskPrompt("How would you like to observe?", ["See", "Touch", "Smell"], image)
         match choice2:
             case "1":
