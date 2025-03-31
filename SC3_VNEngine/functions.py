@@ -1,8 +1,10 @@
 from collections import deque
+
 #Define variables
 prevImage = []
 
-def print_image(image : str):
+#Displays an image accordingly in a tidy display
+def print_image(image : list):
     global prevImage
     if (len(image) == 15 or (image == "null")):
         for i in range(0,15):
@@ -21,6 +23,7 @@ def print_image(image : str):
     if (image != "null"):
         prevImage = image
 
+#Displays the text that was provided
 def print_text(text : str, lineAmount : int = "null"):
     #Declare variables
     toPrint = ""
@@ -29,8 +32,6 @@ def print_text(text : str, lineAmount : int = "null"):
     words = deque(text.split(" "))
     lines = 0
     
-    # ! I feel like something is missing in the loops below
-
     while not complete:
         #Clear the previous values from buffer
         toPrint = ""
@@ -51,10 +52,15 @@ def print_text(text : str, lineAmount : int = "null"):
                     complete = True
                 #Exit the loop
                 break
+            
+        #If there are no words left, it exits the loop
+        if len(words) == 0:
+            complete = True
 
         #Add spaces if necessary
         if not (len(toPrint) == 60):
             toPrint += " " * (60 - len(toPrint))
+            
 
         #Print the buffer
         print(f"[{toPrint}]")
@@ -72,7 +78,8 @@ def print_text(text : str, lineAmount : int = "null"):
             print(f"[{' ' * 60}]")
 
 
-def ask_question(question : str, answers : str, image : str ="null"):
+#Displays the question with the image and answers that were provided
+def ask_question(question : str, answers : list, image : list ="null"):
     #Add newlines, 49 so that it doesn't compress automatically
     print("\n" * 49)
     print(f"[{'=' * 60}]")
@@ -91,20 +98,23 @@ def ask_question(question : str, answers : str, image : str ="null"):
     print(f"[{'=' * 60}]")
 
 
-def ask_prompt(question : str, answers : str, image : str ="null"):
-    #Ask prompt
-    ask_question(question, answers, image)
+# These are the main functions that will be 
+# used by the user throughout the library
+
+#One of the main functions for questioning the user on their choice
+def ask_prompt(question : str, answers : list, image : list ="null"):
     #Get input
-    choice = input("")
     while True:
-        if choice.isnumeric() and int(choice) <= len(answers):
-            break
-        choice = input("")
         ask_question(question, answers, image)
+        choice = input("")
+        
+        if int(choice) <= len(answers) and int(choice) > 0:
+            break
+    
     return choice
 
-
-def create_dialogue(text : str, image : str ="null") :
+#The other main functions for displaying dialogue
+def create_dialogue(text : str, image : list ="null") :
         print("\n" * 49)
         print(f"[{'=' * 60}]")
         #Print the Image
